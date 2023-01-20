@@ -62,23 +62,23 @@ public class InstaCopy {
     }
     display.dispose();
     
-    sourceDir = new File("C:\\Anton\\Programs\\Java\\InstaCopy\\Source");//getSourceDir();
-    targetDir = new File("C:\\Anton\\Programs\\Java\\InstaCopy\\Target"); //getRootDir();
+    sourceDir = new File("C:\\Anton\\Programs\\Java\\InstaCopy 2.0\\Source");//getSourceDir();
+    targetDir = new File("C:\\Anton\\Programs\\Java\\InstaCopy 2.0\\Target"); //getRootDir();
     
     createFiles();
     settings = new Settings();
         
-    int numCopied = 0;
-    int numErrored = 0;
+//    int numCopied = 0;
+//    int numErrored = 0;
 //    for (FileObj file: filesList) {
-//      try{
-//        if (file.copyFile()) {
-//          numCopied++;
-//        }
-//      } catch (Exception e) {
-//        System.out.println(e.getMessage());
-//        numErrored++;
-//    }
+//    	try{
+//    		if (file.copyFile()) {
+//    			numCopied++;
+//    		}
+//    	} catch (Exception e) {
+//    		System.out.println(e.getMessage());
+//    		numErrored++;
+//    	}
 //    }
 //    System.out.println("Files copied: " + numCopied + " Errors: " + numErrored);
     

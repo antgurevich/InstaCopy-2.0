@@ -27,16 +27,16 @@ public class Settings {
   }
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
   /**
-   * Gets path for root
+   * Gets path for target
    * 
-   * @return String of RootDirectory path
-   * @throws Exception If RootDirectory can't be retrieved
+   * @return String of TargetDirectory path
+   * @throws Exception If TargetDirectory can't be retrieved
    */
-  public String getRoot() throws Exception{
+  public String getTarget() throws Exception{
     try{
-      return ini.get("USER_INFO", "RootDirectory");
+      return ini.get("USER_INFO", "TargetDirectory");
     }catch (Exception e) {
-      throw new Exception("Error getting Root in ini: " + e.getMessage());
+      throw new Exception("Error getting Target in ini: " + e.getMessage());
     }
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,17 +112,17 @@ public class Settings {
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
-   * Sets root directory in ini
+   * Sets target directory in ini
    * 
-   * @param rootPath String of root dir
+   * @param targetPath String of target dir
    */
-  public void setRootDir(String rootPath) {
+  public void setTargetDir(String targetPath) {
     try{
-      ini.put("USER_INFO", "RootDirectory", new File(rootPath).getPath());
+      ini.put("USER_INFO", "TargetDirectory", new File(targetPath).getPath());
 
       ini.store();
     }catch (Exception e) {
-      System.out.println("Error setting Root in ini: " + e.getMessage());
+      System.out.println("Error setting Target in ini: " + e.getMessage());
     }
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@ public class Settings {
   public void createDefaults() {
     try{
       ini.put("USER_INFO", "SourceDirectory", InstaCopy.sourceDir.getPath());
-      ini.put("USER_INFO", "RootDirectory", InstaCopy.targetDir.getPath());
+      ini.put("USER_INFO", "TargetDirectory", InstaCopy.targetDir.getPath());
       
       ini.put("SETTINGS", "ChangePrefix", false);
       ini.put("SETTINGS", "SortFolders", false);

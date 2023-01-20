@@ -40,7 +40,7 @@ public class FileObj {
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////  
   /**
-   * Copies file from source to root
+   * Copies file from source to target
    * 
    * @return boolean representing if file was copied
    * @throws Exception if error occurs during copying
