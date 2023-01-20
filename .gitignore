@@ -1,0 +1,6 @@
+#Compiled classes
+*.class
+
+#Test Source/Target folder
+Source/
+Target/
