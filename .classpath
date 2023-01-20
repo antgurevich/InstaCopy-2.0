@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Anton/Programs/External Libraries/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/Anton/Programs/External Libraries/ini4j-0.5.4-bin/ini4j-0.5.4/ini4j-0.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/src.zip" sourcepath="lib/swt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
