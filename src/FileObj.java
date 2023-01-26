@@ -12,7 +12,6 @@ import org.ini4j.Wini;
 
 public class FileObj {
   
-  public static Scanner input = new Scanner(System.in);  
   private File file;
   private String filePath;
   private String fileName;
@@ -36,7 +35,7 @@ public class FileObj {
     this.fileDate = getFileDate();
     
     this.fileType = fileType;
-    this.targetPath = new File(InstaCopy.targetDir + "\\" + fileName);
+    this.targetPath = new File(InstaCopy.getTargetDir() + "\\" + fileName);
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////  
   /**
@@ -62,12 +61,12 @@ public class FileObj {
         
         String newName = this.fileName.replace(replace, prefix);
         setFileName(newName);
-        setTargetPath(new File (InstaCopy.targetDir + "\\" + newName));
+        setTargetPath(new File (InstaCopy.getTargetDir().getAbsolutePath() + "\\" + newName));
       }
 
       if (InstaCopy.settings.getSortFolders()) { // Sets path to correct destination for folders
-        setTargetPath(new File (InstaCopy.targetDir + "\\" + this.fileDate + "\\" + this.fileName));
-        File dirFolder = new File(InstaCopy.targetDir + "\\" + this.fileDate);
+        setTargetPath(new File (InstaCopy.getTargetDir().getAbsolutePath() + "\\" + this.fileDate + "\\" + this.fileName));
+        File dirFolder = new File(InstaCopy.getTargetDir().getAbsolutePath() + "\\" + this.fileDate);
         dirFolder.mkdir(); // Creates directory if doesn't already exist
       }
       
