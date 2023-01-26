@@ -1,19 +1,27 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Scanner;
-//import org.ini4j.Wini;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.layout.RowLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class InstaCopy {
 
-  public static File sourceDir;
-  public static File targetDir;
-  public static FileObj[] filesList;
+  private static File sourceDir;
+  private static File targetDir;
+  private static FileObj[] filesList;
   public static Scanner input = new Scanner(System.in);
   public static Settings settings;
+  private static JFrame frame;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
@@ -22,86 +30,119 @@ public class InstaCopy {
    * @param args Unused
    */
   public static void main(String[] args) {
-    Display display = new Display();
-    Shell shell = new Shell(display);
     
-    //Shell layout
-    RowLayout rowLayout = new RowLayout();
-    rowLayout.type = SWT.HORIZONTAL;
-    rowLayout.wrap = false;
-    rowLayout.marginLeft = 50;
-    rowLayout.marginTop = 20;
-    rowLayout.marginBottom = 20;
-    rowLayout.marginRight = 50;
-    shell.setLayout(rowLayout);
+	 setupFrame();
     
-    //Shell properties
-    shell.setText("InstaCopy");
-    //shell.setSize(250, 150);
-    shell.setMaximized(true); // Maximizes window
-    
-    //Copy button
-    Button copyButton = new Button(shell, SWT.PUSH);
-//    copyButton.setLocation(50, 50);
-    Point size = copyButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-    copyButton.setSize(size);
-    copyButton.setText("Copy");
-//    copyButton.pack();
-    
-    //Settings button
-    Button settingsButton = new Button(shell, SWT.PUSH);
-    settingsButton.setText("Settings");
-    //settingsButton.pack();
-    
-    //shell.pack();
-    shell.open();
-    while (!shell.isDisposed()) {
-      if (!display.readAndDispatch()) {
-        display.sleep();
-      }
-    }
-    display.dispose();
-    
-    sourceDir = new File("C:\\Anton\\Programs\\Java\\InstaCopy 2.0\\Source");//getSourceDir();
-    targetDir = new File("C:\\Anton\\Programs\\Java\\InstaCopy 2.0\\Target"); //getRootDir();
+    sourceDir = getSourceDir();
+    targetDir = getTargetDir();
     
     createFiles();
     settings = new Settings();
-        
-//    int numCopied = 0;
-//    int numErrored = 0;
-//    for (FileObj file: filesList) {
-//    	try{
-//    		if (file.copyFile()) {
-//    			numCopied++;
-//    		}
-//    	} catch (Exception e) {
-//    		System.out.println(e.getMessage());
-//    		numErrored++;
-//    	}
-//    }
-//    System.out.println("Files copied: " + numCopied + " Errors: " + numErrored);
+    
+    //startCopy();
     
   }
-////////////////////////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Creates frontend interface
+   */
+  private static void setupFrame() {
+	  frame = new JFrame("InstaCopy");
+	  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	  frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	  
+	  JPanel panel = new JPanel(null); // Overall Container
+	  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	  int screenWidth = (int) screenSize.getWidth();
+	  int screenHeight = (int) screenSize.getHeight();
+	  Color bgColor = new Color(18, 18, 18);
+	  Color menuColor = new Color(24, 24, 24);
+	  
+	  // Top bar
+	  JPanel topPanel = new JPanel();
+	  topPanel.setBackground(menuColor);
+	  topPanel.setSize( screenWidth, screenHeight/10 );
+	  setupTopPanel(topPanel);
+	  panel.add(topPanel);
+	  
+	  // Side section
+	  JPanel sidePanel = new JPanel(null);
+	  sidePanel.setBackground(menuColor);
+	  sidePanel.setLocation(screenWidth - screenWidth/4, screenHeight/10);
+	  sidePanel.setSize(screenWidth/4, screenHeight - screenHeight/7);
+	  setupSidePanel(sidePanel);
+	  panel.add(sidePanel);
+	  
+	  // Main section
+	  JPanel bodyPanel = new JPanel(null);
+	  bodyPanel.setBackground(bgColor);
+	  bodyPanel.setSize( screenWidth - screenWidth/4, screenHeight - screenHeight/10);
+	  bodyPanel.setLocation(0, 100);
+	  
+	  panel.add(bodyPanel);
+	  
+	  frame.setContentPane(panel);
+	  frame.setVisible(true);
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  private static void setupTopPanel(JPanel panel) {
+
+	  
+	  JLabel title = new JLabel("InstaCopy");
+	  title.setForeground(new Color(255, 255, 255));
+	  //title.setSize(100, 50);
+	  title.setFont(new Font("Arial", Font.PLAIN, 30));
+	  title.setLocation(new Point(0, 100));
+	  panel.add(title);
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  private static void setupSidePanel(JPanel panel) {
+	  panel.setLayout(null);
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  private static void setupMainPanel(JPanel panel) {
+	  panel.setLayout(null); // https://www.javatpoint.com/GridLayout
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Copies files
+   */
+  private static void startCopy() {
+	  int numCopied = 0;
+	  int numErrored = 0;
+	  for (FileObj file: filesList) {
+		  try{
+			  if (file.copyFile()) {
+				  numCopied++;
+			  }
+		  } catch (Exception e) {
+			  System.out.println(e.getMessage());
+			  numErrored++;
+		  }
+	  }
+	  System.out.println("Files copied: " + numCopied + " Errors: " + numErrored);
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
    * Prompts user for source directory
    * 
-   * @return String representing source
+   * @return File of source
    */
-  public static String getSourceDir() {
-    System.out.print("Enter source directory: ");
-    return input.next();
+  public static File getSourceDir() {
+    //System.out.print("Enter source directory: ");
+    //return input.next();
+	return new File("C:\\Anton\\Programs\\Java\\InstaCopy 2.0\\Source");
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////  
   /**
-   * Prompts user for root directory
+   * Prompts user for target directory
    * 
-   * @return String representing root
+   * @return File of target
    */
-  public static String getRootDir() {
-    System.out.print("Enter root directory: ");
-    return input.next();
+  public static File getTargetDir() {
+    //System.out.print("Enter root directory: ");
+    //return input.next();
+	return new File("C:\\Anton\\Programs\\Java\\InstaCopy 2.0\\Target"); 
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
   /**

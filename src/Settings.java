@@ -190,8 +190,8 @@ public class Settings {
    */
   public void createDefaults() {
     try{
-      ini.put("USER_INFO", "SourceDirectory", InstaCopy.sourceDir.getPath());
-      ini.put("USER_INFO", "TargetDirectory", InstaCopy.targetDir.getPath());
+      ini.put("USER_INFO", "SourceDirectory", InstaCopy.getSourceDir().getPath());
+      ini.put("USER_INFO", "TargetDirectory", InstaCopy.getTargetDir().getPath());
       
       ini.put("SETTINGS", "ChangePrefix", false);
       ini.put("SETTINGS", "SortFolders", false);
